@@ -5,22 +5,20 @@ import {
   parseDateKey,
   todayKey,
 } from "@/lib/dates";
+import { type RawSearchParams, firstParam } from "@/lib/search-params";
 
 export type ExpenseFilters =
   | { mode: "day"; date: string; categoryId: string | null }
   | { mode: "month"; month: string; categoryId: string | null };
 
-type RawParams = Record<string, string | string[] | undefined>;
-
-function first(value: string | string[] | undefined): string {
-  return (Array.isArray(value) ? value[0] : value) ?? "";
-}
-
 // Today by default. A "date" param selects one day, a "month" param selects a whole month.
-export function parseExpenseFilters(params: RawParams, today: string = todayKey()): ExpenseFilters {
-  const categoryId = first(params.category) || null;
-  const date = first(params.date);
-  const month = first(params.month);
+export function parseExpenseFilters(
+  params: RawSearchParams,
+  today: string = todayKey(),
+): ExpenseFilters {
+  const categoryId = firstParam(params.category) || null;
+  const date = firstParam(params.date);
+  const month = firstParam(params.month);
 
   if (parseDateKey(date)) return { mode: "day", date, categoryId };
   if (isMonthKey(month)) return { mode: "month", month, categoryId };
