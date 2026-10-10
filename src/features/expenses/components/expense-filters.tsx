@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { MonthPicker } from "@/components/layout/month-picker";
-import { buttonClass, inputClass } from "@/components/ui/styles";
+import { buttonClass, compactInputClass } from "@/components/ui/styles";
 import type { CategoryOption } from "@/features/categories/queries";
 import type { ExpenseFilters } from "../filters";
 
@@ -62,7 +62,7 @@ export function ExpenseFiltersBar({
             aria-label="Expense date"
             value={filters.date}
             onChange={(event) => event.target.value && update({ date: event.target.value, month: null })}
-            className={`${inputClass} w-auto py-2`}
+            className={compactInputClass}
           />
           {!isToday && (
             <button type="button" className={buttonClass("secondary", "py-2")} onClick={() => update({ date: null, month: null })}>
@@ -78,7 +78,7 @@ export function ExpenseFiltersBar({
         aria-label="Filter by category"
         value={filters.categoryId ?? ""}
         onChange={(event) => update({ category: event.target.value || null })}
-        className={`${inputClass} w-auto py-2`}
+        className={compactInputClass}
       >
         <option value="">All categories</option>
         {categories.map((category) => (

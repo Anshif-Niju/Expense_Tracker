@@ -3,7 +3,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { shiftMonth } from "@/lib/dates";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/ui/icons";
-import { iconButtonClass, inputClass } from "@/components/ui/styles";
+import { compactInputClass, iconButtonClass } from "@/components/ui/styles";
 
 const MONTHS = [
   "January",
@@ -55,7 +55,7 @@ export function MonthPicker({ value, currentMonth }: { value: string; currentMon
         aria-label="Month"
         value={month}
         onChange={(event) => go(`${year}-${String(event.target.value).padStart(2, "0")}`)}
-        className={`${inputClass} w-auto py-2`}
+        className={compactInputClass}
       >
         {MONTHS.map((name, index) => (
           <option key={name} value={index + 1}>
@@ -67,7 +67,7 @@ export function MonthPicker({ value, currentMonth }: { value: string; currentMon
         aria-label="Year"
         value={year}
         onChange={(event) => go(`${event.target.value}-${monthText}`)}
-        className={`${inputClass} w-auto py-2`}
+        className={compactInputClass}
       >
         {years.map((y) => (
           <option key={y} value={y}>

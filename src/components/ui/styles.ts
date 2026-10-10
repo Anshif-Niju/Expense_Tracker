@@ -15,8 +15,13 @@ export function buttonClass(variant: ButtonVariant = "secondary", extra = ""): s
   return `${base} ${variants[variant]} ${extra}`.trim();
 }
 
-export const inputClass =
-  "block w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink placeholder:text-muted/70 focus:border-income focus:outline-none focus:ring-2 focus:ring-income/25 aria-[invalid=true]:border-expense";
+const inputBase =
+  "rounded-lg border border-line bg-surface px-3 text-sm text-ink placeholder:text-muted/70 focus:border-income focus:outline-none focus:ring-2 focus:ring-income/25 aria-[invalid=true]:border-expense";
+
+export const inputClass = `${inputBase} block w-full py-2.5`;
+
+// Inline controls such as filters, sized to their content.
+export const compactInputClass = `${inputBase} w-auto py-2`;
 
 export const iconButtonClass =
   "inline-flex size-9 items-center justify-center rounded-lg text-muted transition-colors hover:bg-paper hover:text-ink";
