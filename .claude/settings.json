@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm -f prisma/e2e.db prisma/e2e.db-journal)",
+      "Bash(DATABASE_URL=\"file:./e2e.db\" npx prisma migrate deploy)",
+      "Bash(DATABASE_URL=\"file:./e2e.db\" npx prisma db seed)",
+      "PowerShell(Get-NetTCPConnection -LocalPort 3101 -State Listen -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }; Start-Sleep 2; Get-NetTCPConnection -LocalPort 3101 -ErrorAction SilentlyContinue | Measure-Object | Select-Object -ExpandProperty Count)",
+      "Bash(curl -s -o /dev/null http://localhost:3101)",
+      "Bash(curl -s -o /dev/null http://localhost:3101/expenses)",
+      "Bash(time curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3101/salary)",
+      "Bash(curl -s http://localhost:3101/salary)",
+      "Bash(sed -i \"s/getByLabel\\(\\\\\"Category\\\\\"\\)/getByLabel\\(\\\\\"Category\\\\\", { exact: true }\\)/\" flake2.mjs)",
+      "Bash(node flake2.mjs)",
+      "Bash(sed -i 's/name: \"Delete Food expense\" }/name: new RegExp\\(\"Delete tmp\" + i + \" expense\"\\) }/' flake2.mjs)",
+      "Bash(sed -i 's/catch { fails++; console.log\\(\"flake at\", i\\); }/catch { fails++; console.log\\(\"flake at\", i, page.url\\(\\)\\); await page.waitForTimeout\\(8000\\); console.log\\(\"after 8s\", page.url\\(\\), await page.getByRole\\(\"button\",{name:\"Month\",exact:true}\\).getAttribute\\(\"aria-pressed\"\\)\\); }/' flake2.mjs)",
+      "Bash(sed -i 's/await page.waitForTimeout\\(8000\\); console.log\\(\"after 8s\"/await page.getByRole\\(\"button\",{name:\"Month\",exact:true}\\).click\\(\\); await page.waitForURL\\(\\\\/month=2026-10\\\\/,{timeout:5000}\\).then\\(\\(\\)=>console.log\\(\"second click worked\"\\),\\(\\)=>console.log\\(\"second click FAILED\"\\)\\); console.log\\(\"after\"/' flake2.mjs)",
+      "Bash(git commit -q -m ' *)",
+      "PowerShell(Get-NetTCPConnection -LocalPort 3101 -State Listen -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }; \"done\")",
+      "Bash(npm test *)",
+      "Bash(DATABASE_URL=\"file:./e2e.db\" npx next start -p 3101)",
+      "PowerShell(Get-CimInstance Win32_Process -Filter \"Name='node.exe'\" | Where-Object { $_.CommandLine -match 'e2e.mjs|next' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }; Start-Sleep 2; \\(Get-NetTCPConnection -LocalPort 3101 -ErrorAction SilentlyContinue | Measure-Object\\).Count)",
+      "Bash(sed -i 's|^page.on\\(\"requestfailed\".*|page.on\\(\"requestfailed\", \\(r\\) => console.log\\(\"reqfailed\", r.method\\(\\), r.url\\(\\)\\)\\);\\\\npage.on\\(\"request\", \\(r\\) => r.method\\(\\)===\"POST\" \\\\&\\\\& console.log\\(\"POST sent\", r.url\\(\\), \\(r.postData\\(\\)\\\\|\\\\|\"\"\\).slice\\(0,120\\)\\)\\);\\\\npage.on\\(\"response\", async \\(r\\) => { if \\(r.request\\(\\).method\\(\\)===\"POST\"\\) console.log\\(\"POST resp\", r.status\\(\\), \\(await r.text\\(\\).catch\\(\\(\\)=>\"?\"\\)\\).slice\\(0,300\\)\\); }\\);|' dbg.mjs)",
+      "Bash(node dbg.mjs)",
+      "Bash(sed -i 's|^for \\(let i = 0; i < 3; i++\\) {|for \\(let i = 0; i < 8; i++\\) {\\\\n  await page.waitForTimeout\\(1500\\);|; /page.on\\(\"request\"/d; /page.on\\(\"requestfinished\"/d; /page.on\\(\"requestfailed\"/d' dbg2.mjs)",
+      "Bash(node dbg2.mjs)",
+      "Bash(sed -i 's|          href={href}$|          href={href}\\\\n          prefetch={false}|' src/components/layout/nav.tsx)",
+      "Bash(sed -i 's|<Link href={`/expenses?month=${month}`} className|<Link href={`/expenses?month=${month}`} prefetch={false} className|' src/app/page.tsx)",
+      "PowerShell(Get-CimInstance Win32_Process -Filter \"Name='node.exe'\" | Where-Object { $_.CommandLine -match 'next' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }; \"ok\")"
+    ]
+  }
+}

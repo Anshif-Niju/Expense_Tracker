@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { formatMonthLabel } from "@/lib/dates";
 import { formatINR } from "@/lib/money";
 import { AddSalaryButton } from "@/features/salary/components/add-salary-button";
 import type { DashboardSummary } from "../summary";
@@ -31,11 +30,11 @@ function SmallCard({
 
 export function SummaryCards({
   summary,
-  month,
+  periodLabel,
   salaryDefaultDate,
 }: {
   summary: DashboardSummary;
-  month: string;
+  periodLabel: string;
   salaryDefaultDate: string;
 }) {
   const { salary, expenses, balance, today } = summary;
@@ -45,8 +44,8 @@ export function SummaryCards({
   const barLabel =
     salary === 0
       ? expenses > 0
-        ? "Expenses recorded, but no salary added for this month."
-        : "Nothing recorded for this month yet."
+        ? "Expenses recorded, but no salary added yet."
+        : "Nothing recorded yet."
       : negative
         ? `Spent ${formatINR(-balance)} more than the salary.`
         : `${formatINR(expenses)} of ${formatINR(salary)} spent (${spentPercent}%).`;
@@ -58,7 +57,7 @@ export function SummaryCards({
           negative ? "border-expense/30 bg-expense-soft" : "border-income/20 bg-income-soft"
         }`}
       >
-        <h2 className="text-sm text-muted">Remaining balance · {formatMonthLabel(month)}</h2>
+        <h2 className="text-sm text-muted">Remaining balance · {periodLabel}</h2>
         <p
           className={`mt-2 text-4xl font-semibold tracking-tight tabular-nums sm:text-5xl ${
             negative ? "text-expense" : "text-income"
@@ -82,11 +81,11 @@ export function SummaryCards({
         <p className="mt-2 text-sm text-muted">{barLabel}</p>
       </section>
 
-      <SmallCard label="Monthly salary" tone="income" value={formatINR(salary)}>
+      <SmallCard label="Salary" tone="income" value={formatINR(salary)}>
         {salary === 0 && (
           <div className="mt-3">
             <AddSalaryButton defaultDate={salaryDefaultDate} className="px-3 py-1.5">
-              Add salary for {formatMonthLabel(month).split(" ")[0]}
+              Add salary
             </AddSalaryButton>
           </div>
         )}

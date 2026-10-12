@@ -3,14 +3,14 @@
 @theme {
   --font-sans: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
 
-  --color-paper: #f2f5f1;
+  --color-paper: #f4f8fe;
   --color-surface: #ffffff;
-  --color-ink: #14201a;
-  --color-muted: #5a6a61;
-  --color-line: #dde4de;
-  --color-sidebar: #10231a;
-  --color-income: #17794a;
-  --color-income-soft: #e2f1e8;
+  --color-ink: #0f1d33;
+  --color-muted: #5b6b82;
+  --color-line: #dbe5f3;
+  --color-sidebar: #1d4ed8;
+  --color-income: #2563eb;
+  --color-income-soft: #e8f0ff;
   --color-expense: #b3362b;
   --color-expense-soft: #fbe8e5;
 }

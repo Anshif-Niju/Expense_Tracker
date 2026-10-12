@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { dayRange, monthRange } from "@/lib/dates";
 import { sumPaise } from "@/lib/money";
+import { type Period, dateWhere } from "./period";
 
 export type DashboardSummary = {
   salary: number;
@@ -47,6 +48,26 @@ export async function getDashboardSummary(monthKey: string, today: string): Prom
   return computeSummary({
     salaries: salaries.map((row) => row.amount),
     monthExpenses: monthExpenses.map((row) => row.amount),
+    todayExpenses: todayExpenses.map((row) => row.amount),
+  });
+}
+
+export async function getPeriodSummary(period: Period, today: string): Promise<DashboardSummary> {
+  const where = dateWhere(period);
+  const day = dayRange(today);
+
+  const [salaries, expenses, todayExpenses] = await Promise.all([
+    db.salary.findMany({ where, select: { amount: true } }),
+    db.expense.findMany({ where, select: { amount: true } }),
+    db.expense.findMany({
+      where: { date: { gte: day.start, lt: day.end } },
+      select: { amount: true },
+    }),
+  ]);
+
+  return computeSummary({
+    salaries: salaries.map((row) => row.amount),
+    monthExpenses: expenses.map((row) => row.amount),
     todayExpenses: todayExpenses.map((row) => row.amount),
   });
 }
